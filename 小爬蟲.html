@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+
+<meta charset="utf-8">
+<title>mysearch</title>
+
+<head>
+<script src="jquery-3.7.1.js"></script>
+
+</head>
+
+<body>
+<h2>查找资源</h2>
+<span>
+   <!-- <input id = "url" type="text" style="width:400px"  value=></input>-->> 
+    <button onclick = "fun()">go</button>
+
+</span>
+<div id = "cont"></div>
+<script>
+var url = "https://www.sisurl.net/forum/";
+var p = "(?:爷|爺|祖|爸|爹|父|伯|叔|おじ|女儿|侄女|姪女|めい|孙|孫|禁断|介护|老人|老头|おじいさん|娘|童颜|萝莉|高中生|18岁|老牛|嫩|老年|白发|银发|白虎|无毛|上司|後輩)";
+var pram = '<a href="thread.+?'+p+'.+?</a>';
+var page = 1;
+var sear = "forum-58-"
+function fun()
+{
+	
+		
+	var xmlhttp=new XMLHttpRequest();
+	var nUrl = url + sear + page + '.html';
+	xmlhttp.onreadystatechange=function()
+	{
+		if (xmlhttp.readyState==4 && xmlhttp.status==200)
+		{
+			reg(xmlhttp.responseText);
+		}
+	}
+	xmlhttp.open("GET",nUrl,true);
+	xmlhttp.send();
+}
+
+//正则匹配
+function reg(text){
+	var pat=new RegExp(pram ,"g");
+	var arr = text.match(pat);
+	for(var item of arr){
+		item = item.replace(/<a href="/, '<a href="'+url);
+	    document.getElementById("cont").innerHTML += item+"<br><br>";
+	}
+	
+
+}
+</script>
+
+</body>
+</html>
